@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useAddNewUserMutation } from "./usersApiSlice";
+import { useState, useEffect } from "react";import { useAddNewUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
@@ -9,7 +8,7 @@ const USERNAME_REGEX = /^[a-zA-Z0-9]{4,20}$/;
 const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{4,20})/;
 /**password must contain with 4-20 characters includes capital alphabets ,numbers and these special symbol"!@#$%^&*" */
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{4,40}$/;
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]/;
 /**email is invalid */
 
 const NewUserForm = () => {
@@ -41,16 +40,13 @@ const NewUserForm = () => {
     setValidEmail(EMAIL_REGEX.test(email));
   }, [email]);
 
-  console.log("🚀 -> email:", email);
-
   useEffect(() => {
     setValidPassword(PASSWORD_REGEX.test(password));
   }, [password]);
 
-  useEffect(
-    () => setValidConfirmPassword(password === confirmPassword),
-    [password, confirmPassword]
-  );
+  useEffect(() => {
+    setValidConfirmPassword(password === confirmPassword);
+  }, [confirmPassword, password]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -61,6 +57,11 @@ const NewUserForm = () => {
       navigate("/");
     }
   }, [isSuccess, navigate]);
+
+  useEffect(() => {
+    setPassword("");
+    setConfirmPassword("");
+  }, [isError]);
 
   const onUsernameChanged = (e) => setUsername(e.target.value);
   const onEmailChanged = (e) => setEmail(e.target.value);
@@ -98,7 +99,7 @@ const NewUserForm = () => {
           Please fill all the required fields
         </Alert>
       ) : null}
-      <Card className="my-1 mx-md-5 shadow-sm">
+      <Card className="my-3 mx-md-5 shadow-sm">
         <Card.Body className="px-md-3">
           <Card.Title className="mb-3">Register</Card.Title>
           <Form>
@@ -113,7 +114,8 @@ const NewUserForm = () => {
                 onFocus={() => setUsernameOnFocus(true)}
                 onBlur={() => setUsernameOnFocus(false)}
               />
-              {(!validUsername && usernameOnFocus) || username ? (
+              {(!validUsername && usernameOnFocus) ||
+              (username && !validUsername) ? (
                 <Form.Text className="text-muted">
                   Username must contain with 4-20 characters includes alphabets
                   and numbers
@@ -130,7 +132,7 @@ const NewUserForm = () => {
                 onFocus={() => setEmailOnFocus(true)}
                 onBlur={() => setEmailOnFocus(false)}
               />
-              {(!validEmail && emailOnFocus) || email ? (
+              {(!validEmail && emailOnFocus) || (email && !validEmail) ? (
                 <Form.Text className="text-muted">
                   Must be valid email address
                 </Form.Text>
@@ -147,7 +149,8 @@ const NewUserForm = () => {
                 onFocus={() => setPasswordOnFocus(true)}
                 onBlur={() => setPasswordOnFocus(false)}
               />
-              {(!validPassword && passwordOnFocus) || password ? (
+              {(!validPassword && passwordOnFocus) ||
+              (password && !validPassword) ? (
                 <Form.Text className="text-muted">
                   Password must contain with 4-20 characters includes capital
                   alphabets ,numbers and these special symbol"!@#$%^&*"
@@ -165,7 +168,7 @@ const NewUserForm = () => {
                 onFocus={() => setConfirmPasswordOnFocus(true)}
                 onBlur={() => setConfirmPasswordOnFocus(false)}
               />
-              {!validConfirmPassword && confirmPasswordOnFocus ? (
+              {!validConfirmPassword || confirmPasswordOnFocus ? (
                 <Form.Text className="text-muted">
                   Password must match with above password
                 </Form.Text>
@@ -182,7 +185,7 @@ const NewUserForm = () => {
         </Card.Body>
       </Card>
       {error && isError ? (
-        <Alert key="danger" variant="danger" className="mt-2">
+        <Alert key="danger" variant="danger" className="mt-2 mx-md-5">
           {error?.data?.message}
         </Alert>
       ) : null}
