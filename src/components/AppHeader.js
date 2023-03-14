@@ -9,7 +9,7 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";const AppH
             {/**public route */}
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="#product">Products</Nav.Link>
-            <Nav.Link className="mx-auto mx-md-5" href="#login">
+            <Nav.Link className="mx-auto mx-md-5" href="/login">
               Login
             </Nav.Link>
             <Nav.Link className="mx-auto mx-md-5" href="/register">
@@ -19,7 +19,7 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";const AppH
             {/**private route */}
             <NavDropdown className="" href="#manage" title="Manage">
               <NavDropdown.Item href="#manage/product">
-                Product
+                Products
               </NavDropdown.Item>
               <NavDropdown.Item href="#manage/stocks">Stocks</NavDropdown.Item>
               <NavDropdown.Item href="#manage/users">Users</NavDropdown.Item>

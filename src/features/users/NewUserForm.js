@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";import { useAddNewUserMutation } from "./usersApiSlice";
+import { useState, useEffect, useRef } from "react";
+import { useAddNewUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
 
 const USERNAME_REGEX = /^[a-zA-Z0-9]{4,20}$/;
-/**username must contain with 4-20 characters includes alphabets and numbers  */
+/**username must contain with 4-20 characters includes alphabets or numbers  */
 const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{4,20})/;
 /**password must contain with 4-20 characters includes capital alphabets ,numbers and these special symbol"!@#$%^&*" */
@@ -13,6 +14,8 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]/;
 
 const NewUserForm = () => {
   useTitle("Cookies Me: Register New User");
+
+  const userRef = useRef();
 
   const [addNewUser, { isLoading, isSuccess, isError, error }] =
     useAddNewUserMutation();
@@ -31,6 +34,10 @@ const NewUserForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [confirmPasswordOnFocus, setConfirmPasswordOnFocus] = useState(false);
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
 
   useEffect(() => {
     setValidUsername(USERNAME_REGEX.test(username));
@@ -84,6 +91,17 @@ const NewUserForm = () => {
     }
   };
 
+  const onFieldsFocus = [
+    usernameOnFocus,
+    emailOnFocus,
+    passwordOnFocus,
+    confirmPasswordOnFocus,
+  ].some(Boolean);
+
+  const FilledFields = [username, email, password, confirmPassword].every(
+    Boolean
+  );
+
   /** const errClass = isError ? "errmsg" : "offscreen"
     const validUserClass = !validUsername ? 'form__input--incomplete' : ''
     const validPwdClass = !validPassword ? 'form__input--incomplete' : ''
@@ -91,7 +109,7 @@ const NewUserForm = () => {
 
   const content = (
     <Container>
-      {!canSubmit ? (
+      {!FilledFields && onFieldsFocus ? (
         <Alert
           key="warning"
           variant="warning"
@@ -105,10 +123,11 @@ const NewUserForm = () => {
           <Form>
             <Form.Group controlId="formBasicUsername">
               <Form.Label>Username</Form.Label>
-              <Form.Control
+              <input
+                className="form-control"
                 type="text"
+                ref={userRef}
                 autoComplete="off"
-                placeholder="Enter username"
                 value={username}
                 onChange={onUsernameChanged}
                 onFocus={() => setUsernameOnFocus(true)}
@@ -118,7 +137,7 @@ const NewUserForm = () => {
               (username && !validUsername) ? (
                 <Form.Text className="text-muted">
                   Username must contain with 4-20 characters includes alphabets
-                  and numbers
+                  or numbers
                 </Form.Text>
               ) : null}
             </Form.Group>
@@ -126,7 +145,6 @@ const NewUserForm = () => {
               <Form.Label>Email Address</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter email"
                 value={email}
                 onChange={onEmailChanged}
                 onFocus={() => setEmailOnFocus(true)}
@@ -142,7 +160,6 @@ const NewUserForm = () => {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Password"
                 autoComplete="off"
                 value={password}
                 onChange={onPasswordChanged}
@@ -161,14 +178,13 @@ const NewUserForm = () => {
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Confirm Password"
                 autoCapitalize="off"
                 value={confirmPassword}
                 onChange={onConfirmPasswordChanged}
                 onFocus={() => setConfirmPasswordOnFocus(true)}
                 onBlur={() => setConfirmPasswordOnFocus(false)}
               />
-              {!validConfirmPassword || confirmPasswordOnFocus ? (
+              {!validConfirmPassword ? (
                 <Form.Text className="text-muted">
                   Password must match with above password
                 </Form.Text>
