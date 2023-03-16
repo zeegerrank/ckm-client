@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from "react";import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "./authApiSlice";
@@ -31,7 +32,7 @@ const Login = () => {
       dispatch(setCredentials({ accessToken }));
       setEmail("");
       setPassword("");
-      navigate("/");
+      navigate("/account");
     } catch (err) {
       if (!err.status) {
         setErrMsg("Server is not responding");
