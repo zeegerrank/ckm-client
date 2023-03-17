@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";import { useNavigate } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "./authApiSlice";
 import { setCredentials } from "./authSlice";
 import { PulseLoader } from "react-spinners";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
+import usePersist from "../../hooks/usePersist";
 
 const Login = () => {
   useTitle("Login");
@@ -21,6 +21,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
+  const [setPersist] = usePersist();
+
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -29,6 +31,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { accessToken } = await login({ email, password }).unwrap();
+      setPersist((prev) => !prev);
       dispatch(setCredentials({ accessToken }));
       setEmail("");
       setPassword("");

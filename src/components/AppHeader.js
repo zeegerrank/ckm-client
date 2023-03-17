@@ -1,10 +1,12 @@
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import useAuth from "../hooks/useAuth";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";import useAuth from "../hooks/useAuth";
 
 const AppHeader = () => {
-  const { username, roles } = useAuth();
+  const { username } = useAuth();
+
+  console.log("🚀 -> username:", username);
+
   let user;
-  if (!username || !roles || roles.length === 0) {
+  if (!username) {
     user = false;
   } else {
     user = true;

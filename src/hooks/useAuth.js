@@ -1,9 +1,10 @@
-import { useSelector } from "react-redux";
-import { selectCurrentToken } from "../features/auth/authSlice";
+import { useSelector } from "react-redux";import { selectCurrentToken } from "../features/auth/authSlice";
 import jwtDecode from "jwt-decode";
+import { ROLES } from "../config/ROLES";
 
 const useAuth = () => {
   const token = useSelector(selectCurrentToken);
+
   let isAdmin = false;
   let isManager = false;
   let isEmployee = false;
@@ -14,23 +15,15 @@ const useAuth = () => {
     const decodedToken = jwtDecode(token);
     const { username, roles } = decodedToken.userInfo;
 
-    isAdmin = roles.includes("Admin");
-    isManager = roles.includes("Manager");
-    isEmployee = roles.includes("Employee");
-    isCustomer = roles.includes("Customer");
+    isAdmin = roles.includes(ROLES.ADMIN);
+    isManager = roles.includes(ROLES.MANAGER);
+    isEmployee = roles.includes(ROLES.EMPLOYEE);
+    isCustomer = roles.includes(ROLES.CUSTOMER);
 
-    if (isEmployee) {
-      status = "employee";
-    }
-    if (isManager) {
-      status = "manager";
-    }
-    if (isAdmin) {
-      status = "admin";
-    }
-    if (isCustomer) {
-      status = "customer";
-    }
+    if (isCustomer) status = "customer";
+    if (isEmployee) status = "employee";
+    if (isManager) status = "manager";
+    if (isAdmin) status = "admin";
 
     return {
       username,

@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-const authSlice = createSlice({
+import { createSlice } from "@reduxjs/toolkit";const authSlice = createSlice({
   name: "auth",
   initialState: {
     token: null,
@@ -9,7 +8,7 @@ const authSlice = createSlice({
       const { accessToken } = action.payload;
       state.token = accessToken;
     },
-    logout: (state) => {
+    logout: (state, action) => {
       state.token = null;
     },
   },
