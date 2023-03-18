@@ -5,7 +5,6 @@ import { useLoginMutation } from "./authApiSlice";
 import { setCredentials } from "./authSlice";
 import { PulseLoader } from "react-spinners";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
-import usePersist from "../../hooks/usePersist";
 
 const Login = () => {
   useTitle("Login");
@@ -13,15 +12,13 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading, isError, error, isSuccess }] = useLoginMutation();
 
   const userRef = useRef();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
-
-  const [setPersist] = usePersist();
 
   useEffect(() => {
     userRef.current.focus();
@@ -31,22 +28,18 @@ const Login = () => {
     e.preventDefault();
     try {
       const { accessToken } = await login({ email, password }).unwrap();
-      setPersist((prev) => !prev);
       dispatch(setCredentials({ accessToken }));
       setEmail("");
       setPassword("");
-      navigate("/account");
     } catch (err) {
-      if (!err.status) {
-        setErrMsg("Server is not responding");
-      } else if (err?.status === 401) {
+      if (err?.status === 401) {
         setErrMsg("Invalid email or password");
       } else if (err?.status === 500) {
         setErrMsg("Server error");
       } else if (err?.status === 400) {
         setErrMsg("Invalid email or password");
       } else {
-        setErrMsg(err.data?.message);
+        setErrMsg(err?.data?.message);
       }
     }
   };
@@ -57,8 +50,15 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  if (isLoading) {
-    return <PulseLoader />;
+  if (isLoading) return <PulseLoader />;
+  if (isError) return setErrMsg(error.message);
+  if (isSuccess) {
+    const persist = localStorage.getItem("persist");
+    if (!persist) {
+      localStorage.setItem("persist", true);
+    }
+    console.log("login success");
+    window.location.href = "/";
   }
 
   const content = (

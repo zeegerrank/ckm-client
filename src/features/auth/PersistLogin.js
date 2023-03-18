@@ -2,10 +2,9 @@ import { Outlet } from "react-router-dom";import { useEffect, useRef, useState }
 import { useRefreshTokenMutation } from "./authApiSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "./authSlice";
-import usePersist from "../../hooks/usePersist";
 
 const PersistLogin = () => {
-  const [persist] = usePersist();
+  const persist = JSON.parse(localStorage.getItem("persist"));
   const token = useSelector(selectCurrentToken);
   const effectRan = useRef(false);
 
@@ -19,7 +18,7 @@ const PersistLogin = () => {
       const verifyRefreshToken = async () => {
         console.log("verify refresh token");
         try {
-          await refresh().unwrap();
+          await refresh();
           setTrueSuccess(true);
         } catch (err) {
           console.log(err);
@@ -36,7 +35,7 @@ const PersistLogin = () => {
   }, []);
 
   let content;
-  if (!persist) {
+  if (persist !== true) {
     /**persist: no */
     console.log("No Persist");
     content = <Outlet />;
@@ -46,8 +45,8 @@ const PersistLogin = () => {
     content = <div>Loading...</div>;
   } else if (isError) {
     /**persist: no, token: no */
-    console.log("Error");
-    content = <div>{error?.data?.message}</div>;
+    console.log("Error", error.message);
+    content = <Outlet />;
   } else if (isSuccess && trueSuccess) {
     /**persist: yes, token: yes */
     console.log("Success");
@@ -55,6 +54,10 @@ const PersistLogin = () => {
   } else if (inUninitialized) {
     /**persist: yes, token: no */
     console.log("Uninitialized");
+    content = <Outlet />;
+  } else if (!persist && !token) {
+    /**persist: no, token: no */
+    console.log("No Persist and No Token");
     content = <Outlet />;
   }
 
