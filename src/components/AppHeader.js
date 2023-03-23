@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Container, Nav, Navbar, NavDropdown, Alert } from "react-bootstrap";
+import { useEffect, useState } from "react";import { Container, Nav, Navbar, NavDropdown, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
@@ -53,9 +52,6 @@ const AppHeader = () => {
                   <Nav.Link className="mx-auto mx-md-5" href="/login">
                     Login
                   </Nav.Link>
-                  <Nav.Link className="mx-auto mx-md-5" href="/register">
-                    Register
-                  </Nav.Link>
                 </>
               )}
               {/**private route */}
@@ -63,16 +59,14 @@ const AppHeader = () => {
               {user ? (
                 <>
                   <NavDropdown className="" href="#manage" title="Manage">
-                    <NavDropdown.Item href="#manage/product">
+                    <NavDropdown.Item href="#product">
                       Products
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="#manage/stocks">
-                      Stocks
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#manage/users">
+                    <NavDropdown.Item href="#stocks">Stocks</NavDropdown.Item>
+                    <NavDropdown.Item href="/manage/users">
                       Users
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="#manage/instructions">
+                    <NavDropdown.Item href="#instructions">
                       Instructions
                     </NavDropdown.Item>
                   </NavDropdown>

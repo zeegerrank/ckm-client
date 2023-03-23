@@ -1,5 +1,4 @@
-import { useEffect, useState, useRef } from "react";import { useNavigate } from "react-router-dom";
-import useTitle from "../../hooks/useTitle";
+import { useEffect, useState, useRef } from "react";import useTitle from "../../hooks/useTitle";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "./authApiSlice";
 import { setCredentials } from "./authSlice";
@@ -9,7 +8,6 @@ import { Alert, Button, Card, Container, Form } from "react-bootstrap";
 const Login = () => {
   useTitle("Login");
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [login, { isLoading, isError, error, isSuccess }] = useLoginMutation();
@@ -96,6 +94,9 @@ const Login = () => {
                 Submit
               </Button>
             </Form>
+            <Card.Text className="mt-2">
+              Don't have an account? <a href="/register">Register</a>
+            </Card.Text>
           </Card.Body>
         </Card>
         {errMsg && (

@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Landing from "./components/Landing";
-import NewUserForm from "./features/users/NewUserForm";
 import Login from "./features/auth/Login";
 import RequireAuth from "./features/auth/RequireAuth";
 import { ROLES } from "./config/ROLES";
@@ -9,6 +8,9 @@ import Welcome from "./features/auth/Welcome";
 import PrivateOutlet from "./features/auth/PrivateOutlet";
 import PersistLogin from "./features/auth/PersistLogin";
 import useAuth from "./hooks/useAuth";
+import Register from "./features/auth/Register";
+import UsersList from "./features/users/UsersList";
+import NewUserForm from "./features/users/NewUserForm";
 
 function App() {
   const { username } = useAuth();
@@ -25,12 +27,19 @@ function App() {
             path="login"
             element={user ? <Navigate to="/" /> : <Login />}
           />
-          <Route path="register" element={<NewUserForm />} />
+          <Route path="register" element={<Register />} />
+
           {/**private route */}
           <Route
             element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}>
-            <Route path="/account" element={<PrivateOutlet />}>
+            <Route path="account" element={<PrivateOutlet />}>
               <Route index element={<Welcome />} />
+            </Route>
+            <Route path="manage">
+              <Route path="users">
+                <Route index element={<UsersList />} />
+                <Route path="add" element={<NewUserForm />} />
+              </Route>
             </Route>
           </Route>
         </Route>
