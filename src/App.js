@@ -11,6 +11,7 @@ import useAuth from "./hooks/useAuth";
 import Register from "./features/auth/Register";
 import UsersList from "./features/users/UsersList";
 import NewUserForm from "./features/users/NewUserForm";
+import Prefetch from "./app/api/Prefetch";
 
 function App() {
   const { username } = useAuth();
@@ -19,26 +20,30 @@ function App() {
   return (
     <Routes>
       <Route element={<PersistLogin />}>
-        <Route path="/" element={<Layout />}>
-          {/**public route */}
-          <Route index element={<Landing />} />
-          <Route path="products" element="#products" />
-          <Route
-            path="login"
-            element={user ? <Navigate to="/" /> : <Login />}
-          />
-          <Route path="register" element={<Register />} />
+        <Route element={<Prefetch />}>
+          <Route path="/" element={<Layout />}>
+            {/**public route */}
+            <Route index element={<Landing />} />
+            <Route path="products" element="#products" />
+            <Route
+              path="login"
+              element={user ? <Navigate to="/" /> : <Login />}
+            />
+            <Route path="register" element={<Register />} />
 
-          {/**private route */}
-          <Route
-            element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}>
-            <Route path="account" element={<PrivateOutlet />}>
-              <Route index element={<Welcome />} />
-            </Route>
-            <Route path="manage">
-              <Route path="users">
-                <Route index element={<UsersList />} />
-                <Route path="add" element={<NewUserForm />} />
+            {/**private route */}
+            <Route
+              element={
+                <RequireAuth allowedRoles={[...Object.values(ROLES)]} />
+              }>
+              <Route path="account" element={<PrivateOutlet />}>
+                <Route index element={<Welcome />} />
+              </Route>
+              <Route path="manage">
+                <Route path="users">
+                  <Route index element={<UsersList />} />
+                  <Route path="add" element={<NewUserForm />} />
+                </Route>
               </Route>
             </Route>
           </Route>

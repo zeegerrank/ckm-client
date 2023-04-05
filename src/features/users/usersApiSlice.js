@@ -9,17 +9,18 @@ export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => ({
-        url: "users",
-        method: "POST",
+        url: "/users",
+        method: "GET",
         validateStatus: (response, result) => {
           return response.status === 200 && !result.isError;
         },
       }),
-      transformResponse: (responseData) => {
-        const loadedUsers = responseData.users.map((user) => {
-          user.id = user._i;
+      transformResponse: async (responseData) => {
+        const loadedUsers = await responseData.map((user) => {
+          user.id = user._id;
           return user;
         });
+
         return usersAdapter.setAll(initialState, loadedUsers);
       },
       providesTags: (result, error, arg) => {

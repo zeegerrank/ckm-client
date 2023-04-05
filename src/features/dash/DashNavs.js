@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useState } from "react";import { useLocation } from "react-router-dom";
 import DashButtons from "./DashButtons";
 import useAuth from "../../hooks/useAuth";
 import { Button } from "react-bootstrap";
@@ -17,7 +16,7 @@ const DashNavs = () => {
   let atCreateUser;
   let atEditUsers;
 
-  if (section === "users") atUsers = true;
+  if (section === "users" && !action) atUsers = true;
   if (section === "users" && action === "add") atCreateUser = true;
   if (section === "users" && action === "edit") atEditUsers = true;
 
