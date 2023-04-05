@@ -9,13 +9,14 @@ const User = ({ userId }) => {
 
   if (user) {
     const userRolesString = user.roles?.join(", ");
+    console.log(typeof user.createdAt);
 
     return (content = (
       <tr>
         <td>{user.username}</td>
         <td>{user.email}</td>
         <td>{userRolesString}</td>
-        <td>{user.createdAt}</td>
+        <td>{user.createdAt?.replaceAll("T", " T")}</td>
       </tr>
     ));
   }

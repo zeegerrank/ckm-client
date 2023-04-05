@@ -12,6 +12,7 @@ import Register from "./features/auth/Register";
 import UsersList from "./features/users/UsersList";
 import NewUserForm from "./features/users/NewUserForm";
 import Prefetch from "./app/api/Prefetch";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const { username } = useAuth();
@@ -22,6 +23,7 @@ function App() {
       <Route element={<PersistLogin />}>
         <Route element={<Prefetch />}>
           <Route path="/" element={<Layout />}>
+            <Route path="*" element={<PageNotFound />} />
             {/**public route */}
             <Route index element={<Landing />} />
             <Route path="products" element="#products" />
