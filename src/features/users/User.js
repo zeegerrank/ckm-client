@@ -9,7 +9,6 @@ const User = ({ userId }) => {
 
   if (user) {
     const userRolesString = user.roles?.join(", ");
-    console.log(typeof user.createdAt);
 
     return (content = (
       <tr>

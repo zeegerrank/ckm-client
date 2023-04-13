@@ -11,6 +11,7 @@ import useAuth from "./hooks/useAuth";
 import Register from "./features/auth/Register";
 import UsersList from "./features/users/UsersList";
 import NewUserForm from "./features/users/NewUserForm";
+import EditUsersForm from "./features/users/EditUsersForm";
 import Prefetch from "./app/api/Prefetch";
 import PageNotFound from "./pages/PageNotFound";
 
@@ -45,6 +46,7 @@ function App() {
                 <Route path="users">
                   <Route index element={<UsersList />} />
                   <Route path="add" element={<NewUserForm />} />
+                  <Route path="edit" element={<EditUsersForm />} />
                 </Route>
               </Route>
             </Route>

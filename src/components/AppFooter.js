@@ -1,14 +1,14 @@
 const AppFooter = () => {  return (
     <footer
-      className=" text-white text-center"
+      className="  text-white text-center"
       style={{
         marginTop: "1rem",
         padding: "1rem",
-        backgroundColor: "black",
-        position: "fixed",
+        backgroundColor: "#343a40",
         bottom: 0,
         left: 0,
-        width: "100%",
+        right: 0,
+        position: "relative",
       }}>
       Footer
     </footer>
