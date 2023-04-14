@@ -1,5 +1,4 @@
-import { Card, Container, Table } from "react-bootstrap";
-import { useGetUsersQuery } from "./usersApiSlice";
+import { Card, Container, Table } from "react-bootstrap";import { useGetUsersQuery } from "./usersApiSlice";
 import EditUser from "./EditUser";
 const EditUsersForm = () => {
   const {
@@ -35,6 +34,7 @@ const EditUsersForm = () => {
                   <th>Email</th>
                   <th>Role</th>
                   <th>Created date</th>
+                  <th>Delete User</th>
                 </tr>
               </thead>
               <tbody>{tableContent}</tbody>

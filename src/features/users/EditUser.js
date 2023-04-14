@@ -1,8 +1,18 @@
-import { memo, useState } from "react";import { useGetUsersQuery, useUpdateUserMutation } from "./usersApiSlice";
+import { memo, useState } from "react";
+import {
+  useGetUsersQuery,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} from "./usersApiSlice";
 import { ROLES } from "../../config/ROLES";
-import { Button, Form, ToggleButton, Badge } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icon } from "@fortawesome/fontawesome-svg-core";
+import {
+  Button,
+  Form,
+  ToggleButton,
+  Badge,
+  Modal,
+  Alert,
+} from "react-bootstrap";
 const EditUser = ({ userId }) => {
   const { user } = useGetUsersQuery("usersList", {
     selectFromResult: ({ data }) => ({
@@ -12,6 +22,16 @@ const EditUser = ({ userId }) => {
 
   const [updateUser, { isLoading, isSuccess, isError, error }] =
     useUpdateUserMutation();
+
+  const [
+    deleteUser,
+    {
+      isLoading: isLoadingDelete,
+      isSuccess: isSuccessDelete,
+      isError: isErrorDelete,
+      error: errorDelete,
+    },
+  ] = useDeleteUserMutation();
 
   const [usernameEditToggle, setUsernameEditToggle] = useState(false);
   const [emailEditToggle, setEmailEditToggle] = useState(false);
@@ -236,15 +256,99 @@ const EditUser = ({ userId }) => {
     </td>
   );
 
+  const [showConfirmWindow, setShowConfirmWindow] = useState(false);
+  const [confirmWord, setConfirmWord] = useState("");
+  const [confirmError, setConfirmError] = useState("");
+
+  const handleClose = () => setShowConfirmWindow(false);
+  const handleShow = () => setShowConfirmWindow(true);
+
+  const onConfirmWordChanged = (e) => setConfirmWord(e.target.value);
+
+  const onDeleteUserConfirm = () => {
+    let correctWord = `delete user ${user.username}`;
+
+    console.log("🚀 -> correctWord:", correctWord, typeof correctWord);
+
+    console.log("🚀 -> confirmWord:", confirmWord, typeof confirmWord);
+
+    try {
+      if (confirmWord === correctWord) {
+        deleteUser({ id: user.id });
+        setConfirmError("");
+      } else if (!confirmWord) {
+        setConfirmError("Please fill the required field");
+      } else {
+        setConfirmError("Please type the correct word");
+      }
+    } catch (error) {
+      setConfirmError("Something went wrong: " + error.message);
+    }
+  };
+  const deleteUserCellContent = (
+    <td className=" d-flex justify-content-center">
+      <Button size="sm" variant="danger" onClick={handleShow}>
+        <i class=" fa-solid fa-trash"></i>
+      </Button>
+    </td>
+  );
+
   let content;
   if (user) {
     return (content = (
-      <tr>
-        <td>{usernameCellContent}</td>
-        <td>{emailCellContent}</td>
-        <td>{roleCellContent}</td>
-        <td>{user.createdAt?.replaceAll("T", " T")}</td>
-      </tr>
+      <>
+        <Modal show={showConfirmWindow} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Delete User</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {confirmError ? (
+              <Alert variant="danger" className=" w-75">
+                {confirmError}
+              </Alert>
+            ) : null}
+            Are you sure you want to delete user {user.username}?
+            <Form>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1">
+                <Form.Label>
+                  <span className="text-muted">
+                    To confirm delete please type
+                  </span>{" "}
+                  <span className="text-danger">
+                    "delete user {user.username}"
+                  </span>{" "}
+                </Form.Label>
+                <Form.Control
+                  className=" "
+                  type="text"
+                  rows={1}
+                  onChange={onConfirmWordChanged}
+                  value={confirmWord}
+                  placeholder="magic word"
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="danger" onClick={onDeleteUserConfirm}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <tr>
+          <td>{usernameCellContent}</td>
+          <td>{emailCellContent}</td>
+          <td>{roleCellContent}</td>
+          <td>{user.createdAt?.replaceAll("T", " T")}</td>
+          <td>{deleteUserCellContent}</td>
+        </tr>
+      </>
     ));
   }
 

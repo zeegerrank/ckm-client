@@ -1,4 +1,5 @@
-import useAuth from "../../hooks/useAuth";import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useAuth from "../../hooks/useAuth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 const DashButtons = (props) => {
@@ -50,18 +51,13 @@ const DashButtons = (props) => {
       />
     ),
     edit: () => (
-      <>
-        {isAdmin && <div>users</div>}
-        {isManager && <div>users</div>}
-        {isEmployee && <div>users</div>}
-        <FontAwesomeIcon
-          icon={icon({
-            name: "user-pen",
-            style: "solid",
-          })}
-          style={buttonStyle}
-        />
-      </>
+      <FontAwesomeIcon
+        icon={icon({
+          name: "user-pen",
+          style: "solid",
+        })}
+        style={buttonStyle}
+      />
     ),
   };
   let content;
