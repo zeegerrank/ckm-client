@@ -1,0 +1,18 @@
+cookies main
+sugar, flour, fat, egg, chocolate
+
+ingredient / objective / agent, [properties effect], [side effect]
+
+dry
+-flour/			structure/			gluten, 		[body contractment, spread area],	[]
+-sugar/			structure, flavor/ 		molasses, 		[elastic body, chewy texture, flavor density],	[]
+-salt/			flavor/				iodine, 		[salty taste, flavor intensifier],	[]
+-cacao powder/		structure, color, flavor/	compound agent		[cacao flavor, nutty taste, color browish, increase water absorbtion],	[]
+-espresso powder/	flavor, aroma/			compound agent, cafeine	[cofee flavor, bitter taste, flavor intensifier],	[]
+
+semi-solid
+-chocolate/		structure, flavor, aroma/	cacoa fat		[complex aroma, cacao flavor, nutty taste,reduce water absorbtion],	[]
+-butter/		structure, flavor, aroma/	diary fat		[milky scent, fat body's content, tendering body, reduce water absorbtion],	[]
+
+wet
+-vanila extract/	flavor, aroma/			vanila scent		[scent intencifier],	[]

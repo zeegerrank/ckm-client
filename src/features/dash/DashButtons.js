@@ -28,50 +28,97 @@ const DashButtons = (props) => {
    * - get all instructions
    */
 
-  const buttonTagStyle = {
+  const buttonStyle = {
+    fontSize: "32px",
     textDecoration: "none",
     color: "inherit",
   };
-  const buttonStyle = { fontSize: "28px" };
 
-  const UsersButtons = {
-    getAll: () => (
-      <FontAwesomeIcon
-        icon={icon({ name: "users", style: "solid" })}
-        style={buttonStyle}
-      />
-    ),
-    create: () => (
-      <FontAwesomeIcon
-        icon={icon({
-          name: "user-plus",
-          style: "solid",
-        })}
-        style={buttonStyle}
-      />
-    ),
-    edit: () => (
-      <FontAwesomeIcon
-        icon={icon({
-          name: "user-pen",
-          style: "solid",
-        })}
-        style={buttonStyle}
-      />
-    ),
+  const Buttons = {
+    Users: {
+      getAll: () => (
+        <FontAwesomeIcon
+          icon={icon({
+            name: "users",
+            style: "solid",
+          })}
+          style={buttonStyle}
+        />
+      ),
+      create: () => (
+        <FontAwesomeIcon
+          icon={icon({
+            name: "user-plus",
+            style: "solid",
+          })}
+          style={buttonStyle}
+        />
+      ),
+      edit: () => (
+        <FontAwesomeIcon
+          icon={icon({
+            name: "user-pen",
+            style: "solid",
+          })}
+          style={buttonStyle}
+        />
+      ),
+    },
+    Stocks: {
+      getAll: () => (
+        <FontAwesomeIcon
+          icon={icon({
+            name: "box-open",
+            style: "solid",
+          })}
+          style={buttonStyle}
+        />
+      ),
+      create: () => (
+        <FontAwesomeIcon
+          icon={icon({
+            name: "circle-plus",
+            style: "solid",
+          })}
+          style={buttonStyle}
+        />
+      ),
+      edit: () => (
+        <FontAwesomeIcon
+          icon={icon({
+            name: "arrows-rotate",
+            style: "solid",
+          })}
+          style={buttonStyle}
+        />
+      ),
+    },
   };
   let content;
 
   switch (name) {
+    /**User Dash's Buttons */
+    case "getUsers":
+      content = Buttons.Users.getAll();
+      break;
     case "createUser":
-      content = UsersButtons.create();
+      content = Buttons.Users.create();
       break;
     case "editUsers":
-      content = UsersButtons.edit();
+      content = Buttons.Users.edit();
       break;
-    case "getUsers":
-      content = UsersButtons.getAll();
+
+    /**Stock Dash's Buttons */
+    case "getStocks":
+      content = Buttons.Stocks.getAll();
       break;
+    case "createStock":
+      content = Buttons.Stocks.create();
+      break;
+    case "editStocks":
+      content = Buttons.Stocks.edit();
+      break;
+
     default:
   }
 

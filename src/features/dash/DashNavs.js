@@ -10,39 +10,75 @@ const DashNavs = () => {
   const section = path.split("/")[2];
   const action = path.split("/")[3];
 
+  const buttonStyle = "mx-3 my-3";
+
   let content;
 
-  let atUsers;
-  let atCreateUser;
-  let atEditUsers;
-
-  if (section === "users" && !action) atUsers = true;
-  if (section === "users" && action === "add") atCreateUser = true;
-  if (section === "users" && action === "edit") atEditUsers = true;
-
   if (section === "users") {
+    let atUsers;
+    let atCreateUser;
+    let atEditUsers;
+
+    if (!action) atUsers = true;
+    if (action === "add") atCreateUser = true;
+    if (action === "edit") atEditUsers = true;
+
     content = (
       <>
         <Button
           href="/manage/users"
-          className="me-2 mt-3"
+          className={buttonStyle}
           variant={atUsers ? "primary" : "outline-primary"}>
           <DashButtons name="getUsers" />
           <div>Users List</div>
         </Button>
         <Button
           href="/manage/users/add"
-          className="mx-2 mt-3"
+          className={buttonStyle}
           variant={atCreateUser ? "success" : "outline-success"}>
           <DashButtons name="createUser" />
           <div>Add User</div>
         </Button>
         <Button
           href="/manage/users/edit"
-          className="mx-2 mt-3"
+          className={buttonStyle}
           variant={atEditUsers ? "danger" : "outline-danger"}>
           <DashButtons name="editUsers" />
           <div>Edit Users</div>
+        </Button>
+      </>
+    );
+  } else if (section === "stocks") {
+    let atStocks;
+    let atCreateStock;
+    let atEditStocks;
+
+    if (!action) atStocks = true;
+    if (action === "add") atCreateStock = true;
+    if (action === "edit") atEditStocks = true;
+
+    content = (
+      <>
+        <Button
+          href="/manage/stocks"
+          className={buttonStyle}
+          variant={atStocks ? "primary" : "outline-primary"}>
+          <DashButtons name="getStocks" />
+          <div>Stocks List</div>
+        </Button>
+        <Button
+          href="/manage/stocks/add"
+          className={buttonStyle}
+          variant={atStocks ? "success" : "outline-success"}>
+          <DashButtons name="createStock" />
+          <div>Add New</div>
+        </Button>
+        <Button
+          href="/manage/stocks/edit"
+          className={buttonStyle}
+          variant={atStocks ? "danger" : "outline-danger"}>
+          <DashButtons name="editStocks" />
+          <div>Update Stocks</div>
         </Button>
       </>
     );

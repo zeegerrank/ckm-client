@@ -38,7 +38,7 @@ const AppHeader = () => {
 
   return (
     <>
-      <Navbar expand="md" bg="dark" variant="dark">
+      <Navbar expand="md" bg="dark" variant="dark" className="mb-3">
         <Container>
           <Navbar.Brand href="/">CookiesMe</Navbar.Brand>
           <Navbar.Toggle aria-controls="app-navbar" />
@@ -62,7 +62,9 @@ const AppHeader = () => {
                     <NavDropdown.Item href="#product">
                       Products
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="#stocks">Stocks</NavDropdown.Item>
+                    <NavDropdown.Item href="/manage/stocks">
+                      Stocks
+                    </NavDropdown.Item>
                     <NavDropdown.Item href="/manage/users">
                       Users
                     </NavDropdown.Item>

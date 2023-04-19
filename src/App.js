@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
-import Landing from "./components/Landing";
+import Landing from "./pages/Landing";
 import Login from "./features/auth/Login";
 import RequireAuth from "./features/auth/RequireAuth";
 import { ROLES } from "./config/ROLES";
@@ -14,6 +14,7 @@ import NewUserForm from "./features/users/NewUserForm";
 import EditUsersForm from "./features/users/EditUsersForm";
 import Prefetch from "./app/api/Prefetch";
 import PageNotFound from "./pages/PageNotFound";
+import StocksList from "./features/stock/StocksList";
 
 function App() {
   const { username } = useAuth();
@@ -47,6 +48,9 @@ function App() {
                   <Route index element={<UsersList />} />
                   <Route path="add" element={<NewUserForm />} />
                   <Route path="edit" element={<EditUsersForm />} />
+                </Route>
+                <Route path="stocks">
+                  <Route index element={<StocksList />} />
                 </Route>
               </Route>
             </Route>
