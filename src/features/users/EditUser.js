@@ -20,17 +20,22 @@ const EditUser = ({ userId }) => {
     }),
   });
 
-  const [updateUser, { isLoading, isSuccess, isError, error }] =
-    useUpdateUserMutation();
+  const [
+    updateUser,
+    {
+      // isLoading, isSuccess, isError,
+      error,
+    },
+  ] = useUpdateUserMutation();
 
   const [
     deleteUser,
-    {
-      isLoading: isLoadingDelete,
-      isSuccess: isSuccessDelete,
-      isError: isErrorDelete,
-      error: errorDelete,
-    },
+    // {
+    //   isLoading: isLoadingDelete,
+    //   isSuccess: isSuccessDelete,
+    //   isError: isErrorDelete,
+    //   error: errorDelete,
+    // },
   ] = useDeleteUserMutation();
 
   const [usernameEditToggle, setUsernameEditToggle] = useState(false);

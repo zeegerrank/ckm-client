@@ -1,10 +1,10 @@
-import { useState } from "react";import { useLocation } from "react-router-dom";
+/**  import { useState } from "react";*/import { useLocation } from "react-router-dom";
 import DashButtons from "./DashButtons";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 import { Button } from "react-bootstrap";
 
 const DashNavs = () => {
-  const { isAdmin, isManager, isEmployee } = useAuth();
+  // const { isAdmin, isManager, isEmployee } = useAuth();
   const path = useLocation().pathname;
 
   const section = path.split("/")[2];
@@ -50,12 +50,12 @@ const DashNavs = () => {
     );
   } else if (section === "stocks") {
     let atStocks;
-    let atCreateStock;
-    let atEditStocks;
+    // let atCreateStock;
+    // let atEditStocks;
 
     if (!action) atStocks = true;
-    if (action === "add") atCreateStock = true;
-    if (action === "edit") atEditStocks = true;
+    // if (action === "add") atCreateStock = true;
+    // if (action === "edit") atEditStocks = true;
 
     content = (
       <>

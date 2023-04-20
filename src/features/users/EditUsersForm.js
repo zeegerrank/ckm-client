@@ -1,12 +1,13 @@
-import { Card, Container, Table } from "react-bootstrap";import { useGetUsersQuery } from "./usersApiSlice";
+import { Card, Container, Table } from "react-bootstrap";
+import { useGetUsersQuery } from "./usersApiSlice";
 import EditUser from "./EditUser";
 const EditUsersForm = () => {
   const {
     data: users,
-    isLoading,
+    // isLoading,
     isSuccess,
-    isError,
-    error,
+    // isError,
+    // error,
   } = useGetUsersQuery("usersList", {
     pollingInterval: 60000,
     refetchOnFocus: true,

@@ -1,11 +1,10 @@
-import useAuth from "../../hooks/useAuth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+/**import useAuth from "../../hooks/useAuth";*/ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 const DashButtons = (props) => {
   const { name } = props;
 
-  const { isAdmin, isManager, isEmployee } = useAuth();
+  // const { isAdmin, isManager, isEmployee } = useAuth();
 
   /**
    * admin access

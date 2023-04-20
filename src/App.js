@@ -14,7 +14,7 @@ import NewUserForm from "./features/users/NewUserForm";
 import EditUsersForm from "./features/users/EditUsersForm";
 import Prefetch from "./app/api/Prefetch";
 import PageNotFound from "./pages/PageNotFound";
-import StocksList from "./features/stock/StocksList";
+import StocksList from "./features/stocks/StocksList";
 
 function App() {
   const { username } = useAuth();
