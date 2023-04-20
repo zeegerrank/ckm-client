@@ -1,5 +1,4 @@
-import { Outlet } from "react-router-dom";
-import AppHeader from "./AppHeader";
+import { Outlet } from "react-router-dom";import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
 import DashHeader from "../features/dash/DashHeader";
 import { Container, Stack } from "react-bootstrap";

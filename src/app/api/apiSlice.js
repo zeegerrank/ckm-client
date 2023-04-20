@@ -1,8 +1,10 @@
-import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
-import { setCredentials } from "../../features/auth/authSlice";
+import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";import { setCredentials } from "../../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://ckm-server.onrender.com/api",
+  baseUrl:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3500/api"
+      : "https://ckm-server.onrender.com/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
