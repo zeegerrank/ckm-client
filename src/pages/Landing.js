@@ -1,4 +1,6 @@
-const Landing = () => {
+const Landing = () => {  const indent = {
+    marginLeft: "2rem",
+  };
   return (
     <section>
       <div className="text-center mb-3">
@@ -11,17 +13,19 @@ const Landing = () => {
         <strong>"CookiesMe"</strong> is a web application powered by "MERN"
         stack that allows users to manage their cookie experiment, which would
         include the following factors:
-        <ul>
-          <li>Baking Process Instructions</li>
-          <li>Production Capacity</li>
-          <li>Logistics Flow</li>
-          <li>Human Resource</li>
-          <li>Experiment Memo</li>
-        </ul>
+      </p>
+      <ul style={indent}>
+        <li>Baking Process Instructions</li>
+        <li>Production Capacity</li>
+        <li>Logistics Flow</li>
+        <li>Human Resource</li>
+        <li>Experiment Memo</li>
+      </ul>
+      <p style={indent}>
         This web application has potential to be used in large scale and suit
         for pre-order homemade cookies shop.
       </p>
-      <p className="ms-3">
+      <div className="ms-3">
         <h4>Features</h4>
         <ul>
           <li>
@@ -45,7 +49,7 @@ const Landing = () => {
           </li>
         </ul>
         Each features will be printable in PDF format for practical use.
-      </p>
+      </div>
     </section>
   );
 };

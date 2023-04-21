@@ -1,4 +1,5 @@
-import { Outlet } from "react-router-dom";import { useEffect, useRef, useState } from "react";
+import { Outlet } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { useRefreshTokenMutation } from "./authApiSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "./authSlice";
